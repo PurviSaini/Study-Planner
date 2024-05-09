@@ -1,0 +1,23 @@
+.nav{
+    background: rgb(137, 30, 185);
+    background: linear-gradient(
+    90deg,
+    rgba(137, 30, 185, 1) 0%,
+    rgba(223, 44, 86, 1) 100%
+  );
+}
+.outer{
+    height: 100vh;
+}
+.content{
+    width: 100vw;
+}
+* {
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  li:active{
+    border-top: 1px pink solid;
+    border-bottom: 1px pink solid;
+  }
