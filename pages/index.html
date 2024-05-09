@@ -48,11 +48,11 @@
       <div class="row justify-content-center">
         <div class="col-5 my-md-4">
             <div class="container tasks" id="upcoming">
-                <h2>Hey, Username</h2>
+                <h2 class="text-start">Hey  <span class="fs-1 text-uppercase"></span>,</h2>
                 <br>
                 <h3 class="blue">Upcoming Tasks</h3>
                 <ul>
-                    <li>1. </li>
+                    <li> </li>
                     <li>2. </li>
                     <li>3. </li>
                 </ul>
@@ -90,6 +90,8 @@
     localStorage.removeItem("email");
     window.location.href="/";
   })
+  //set username
+  document.querySelector("h2 span").innerText=userEmail.split("@")[0];
 </script>
 
 
