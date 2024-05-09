@@ -30,17 +30,19 @@
 }
 
 #upcoming {
-  height: 400px;
+  height: 89vh;
   overflow: auto;
   position: relative;
 }
 
 #goals {
-  height: 40vh;
+  height: 50vh;
   overflow: auto;
   padding: 20px
 }
-
+#progress{
+  height: 35vh;
+}
 .progress-bar {
   display: inline-block;
   justify-content: center;
