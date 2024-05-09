@@ -53,6 +53,14 @@ app.get("/home", (req, res) => {
   res.sendFile("pages/index.html", { root: __dirname });
 });
 
+
+app.get("/calendar", (req, res) => {
+  if (!req.session.isLoggedIn) {
+    return res.redirect("/");
+  }
+  res.sendFile("pages/calendar.html", { root: __dirname });
+});
+
 app.get("/signup", (req, res) => {
   res.sendFile("pages/signup.html", { root: __dirname });
 });
