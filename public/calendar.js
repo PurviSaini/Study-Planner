@@ -163,7 +163,7 @@ const dates = document.querySelectorAll(".calendar-dates li");
 const addGoal = (e) => {
     const clickedDate = e.target.innerText;
     const clickedMonth = document.querySelector(".month").innerText;
-    let clickMonthno = 0;
+    let clickedMonthno = 0;
     for(let i=0;i<12;i=i+1)
     {
         if(clickedMonth == months[i])
@@ -204,12 +204,13 @@ span2.onclick = function() {
 // const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 let progress = 0;
 
-console.log(checkboxes.length);
 const countCheckedBoxes = () => {
     let checkedCount=0;
     let totalCount = 0;
     checkboxes.forEach(checkbox => {
         if(checkbox.checked) {
+            // console.log("Checked checkbox: ",checkbox);
+            // console.log("Label: ",document.querySelector(`label[for="${checkbox.id}"]`));
             checkedCount++;
         }
         totalCount++;
@@ -223,13 +224,13 @@ const countCheckedBoxes = () => {
 //     checkbox.addEventListener("click", countCheckedBoxes);
 // });
 
-countCheckedBoxes();
-document.querySelector(".tasks-list").addEventListener("change", function(event) {
-    if (event.target.matches('input[type="checkbox"]')) {
-        console.log("YAYAYYA");
-        countCheckedBoxes();
-    }
-});
+// countCheckedBoxes();
+// document.querySelector(".tasks-list").addEventListener("change", function(event) {
+//     if (event.target.matches('input[type="checkbox"]')) {
+//         console.log("YAYAYYA");
+//         countCheckedBoxes();
+//     }
+// });
 
   const addSubT = document.querySelector(".add-subtask");
 
