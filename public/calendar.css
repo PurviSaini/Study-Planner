@@ -17,7 +17,7 @@
     font-weight: 400;
     font-style: normal;
 }
-li:active {
+.nav li:active {
     border-top: 1px pink solid;
     border-bottom: 1px pink solid;
 }
@@ -126,6 +126,7 @@ header .calendar-current-date {
 .calendar-dates li:not(.active):hover::before {
     background: #e4e1e1;
 }
+
 
 .modal {
     display: none;
