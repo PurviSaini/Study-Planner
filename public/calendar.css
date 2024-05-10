@@ -185,9 +185,11 @@ header .calendar-current-date {
     overflow: auto;
 }
 
-.add-task-btn{
-    text-align: center;
-}
+
+/* .add-task-btn .add-task{
+    float: right;
+    margin-top: -10%;
+} */
 
 .add-task{
     background-color: #cd006f;
@@ -216,15 +218,36 @@ header .calendar-current-date {
   );
 }
 
+.progress-bar {
+    background-color: #cd006f;
+}
+
 .weekly-goal {
     margin-top: auto;
     bottom: 0;
 }
 
-.add-goal {
+/* .add-goal {
     background-color:#6332c5;
     border: #aeabab;
-}
+} */
 #delete{
     cursor: pointer;
+}
+
+.goals {
+    display: block;
+}
+
+.div-subtask {
+    display: none;
+}
+
+.add-subtask {
+    border:1px solid #6332c5;
+    border-radius: 50%;
+    color: #ffffff;
+    background-color: #6332c5;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: bolder;
 }
