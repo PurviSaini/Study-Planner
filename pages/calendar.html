@@ -150,8 +150,7 @@
   </div>
 </body>
 <script>
-
-
+  let checkboxes;
   function getTasks(){
     let userEmail=localStorage.getItem("email");
     fetch(`/getTasks?email=${userEmail}`)
@@ -170,6 +169,8 @@
               
               
       })
+      checkboxes=document.querySelectorAll('input[type="checkbox"]');
+     console.log("script tag: ",checkboxes);
     })
   }
   getTasks();
@@ -220,7 +221,11 @@
               <ul>
                 <li>${taskDescription}</li>
               </ul>
-              </section>`
+              </section>`;
+       checkboxes=document.querySelectorAll('input[type="checkbox"]');
+     console.log("script tag: ",checkboxes);
+    // console.log("script tag: ",document.querySelectorAll('input[type="checkbox"]'));
+
     }
     else{
       alert("Task not added");

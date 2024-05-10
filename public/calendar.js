@@ -201,11 +201,11 @@ span2.onclick = function() {
 //   }
 
 // count checkboxes
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+// const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+let progress = 0;
 
 console.log(checkboxes.length);
 const countCheckedBoxes = () => {
-    let progress = 0;
     let checkedCount=0;
     let totalCount = 0;
     checkboxes.forEach(checkbox => {
@@ -219,11 +219,17 @@ const countCheckedBoxes = () => {
     document.querySelector(".progress-bar").style.width = progress+"%";
     console.log(progress);
 }
-checkboxes.forEach(checkbox => {
-    checkbox.addEventListener("click", countCheckedBoxes);
-});
+// checkboxes.forEach(checkbox => {
+//     checkbox.addEventListener("click", countCheckedBoxes);
+// });
 
 countCheckedBoxes();
+document.querySelector(".tasks-list").addEventListener("change", function(event) {
+    if (event.target.matches('input[type="checkbox"]')) {
+        console.log("YAYAYYA");
+        countCheckedBoxes();
+    }
+});
 
   const addSubT = document.querySelector(".add-subtask");
 
