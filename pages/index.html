@@ -48,13 +48,11 @@
       <div class="row justify-content-center" style="height: 95%;">
         <div class="col-5 my-md-4">
             <div class="container tasks" id="upcoming">
-                <h2 class="text-start">Hey  <span class="fs-1 text-uppercase"></span>,</h2>
+                <h2 class="text-start">Hey  <span class="fs-1 text-uppercase pink"></span>,</h2>
                 <br>
                 <h3 class="blue">Upcoming Tasks</h3>
-                <ul>
-                    <li>1. </li>
-                    <li>2. </li>
-                    <li>3. </li>
+                <ul id="upcomingTask">
+                    <li>--No pending tasks--</li>
                 </ul>
             </div>
         </div>
@@ -84,6 +82,27 @@
     </div>
 </body>
 <script>
+  function getProgressFromLocalStorage() {
+    let progressValue = localStorage.getItem("progress");
+    if (progressValue) {
+      return parseInt(progressValue);
+    }
+    return 0;
+  }
+   function updateUpcomingTasks() {
+    let upcomingValue = localStorage.getItem("upcomingTaskTitles");
+    if (upcomingValue) {
+      upcomingValue = JSON.parse(upcomingValue);
+      let upcomingTaskList = document.getElementById("upcomingTask");
+      upcomingTaskList.innerHTML = "";
+      for (let i = 0; i < upcomingValue.length; i++) {
+        let taskItem = document.createElement("li");
+        taskItem.innerText = upcomingValue[i];
+        upcomingTaskList.appendChild(taskItem);
+      }
+    }
+}
+  let progress=getProgressFromLocalStorage();
   let userEmail=localStorage.getItem("email");
   document.getElementById("email").innerText=userEmail;
   document.getElementById("logout").addEventListener("click",()=>{
@@ -92,6 +111,11 @@
   })
   //set username
   document.querySelector("h2 span").innerText=userEmail.split("@")[0];
+  updateUpcomingTasks();
+  window.addEventListener("storage", (event) => {
+    updateUpcomingTasks();
+    progress=getProgressFromLocalStorage();
+  });
 </script>
 
 

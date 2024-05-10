@@ -207,30 +207,24 @@ let progress = 0;
 const countCheckedBoxes = () => {
     let checkedCount=0;
     let totalCount = 0;
+    let upcomingTaskTitles=[];
     checkboxes.forEach(checkbox => {
         if(checkbox.checked) {
-            // console.log("Checked checkbox: ",checkbox);
-            // console.log("Label: ",document.querySelector(`label[for="${checkbox.id}"]`));
             checkedCount++;
         }
+        else{
+            upcomingTaskTitles.push(document.querySelector(`label[for="${checkbox.id}"]`).innerText);
+        }
+        localStorage.setItem("upcomingTaskTitles", JSON.stringify(upcomingTaskTitles));
         totalCount++;
     });
     progress = (checkedCount*100)/totalCount;
     document.querySelector(".progress-bar").ariaValueNow = progress;
     document.querySelector(".progress-bar").style.width = progress+"%";
-    console.log(progress);
+    localStorage.setItem("progress", progress);
+    // console.log(progress);
 }
-// checkboxes.forEach(checkbox => {
-//     checkbox.addEventListener("click", countCheckedBoxes);
-// });
 
-// countCheckedBoxes();
-// document.querySelector(".tasks-list").addEventListener("change", function(event) {
-//     if (event.target.matches('input[type="checkbox"]')) {
-//         console.log("YAYAYYA");
-//         countCheckedBoxes();
-//     }
-// });
 
   const addSubT = document.querySelector(".add-subtask");
 

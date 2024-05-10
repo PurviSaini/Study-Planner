@@ -6,6 +6,13 @@
     rgba(223, 44, 86, 1) 100%
   );
 }
+.blue {
+    color: #5e17eb;
+  }
+  
+  .pink {
+    color:#cd006f;
+  }
 .outer{
     height: 100vh;
 }

@@ -161,7 +161,7 @@
         tasksList.innerHTML+= `
              <section id=${task._id}>
               <input type="checkbox" id=${task._id+"T"}>
-                <label for=${task._id+"T"}>${task.taskTitle}</label><span id="delete" onclick="deleteTask('${task._id}')">❌</span><br>
+                <label for=${task._id+"T"} class="blue">${task.taskTitle}</label><span class="ms-4" id="delete" onclick="deleteTask('${task._id}')">🚫</span><br>
               <ul>
                 <li>${task.taskDesc}</li>
               </ul>
@@ -220,7 +220,7 @@
       document.querySelector(".tasks-list").innerHTML+= `
               <section id=${taskId}>
               <input type="checkbox" id=${taskId+"T"}>
-                <label for=${taskId+"T"}>${taskHeading}</label><span id="delete" onclick="deleteTask('${taskId}')">❌</span><br>
+                <label for=${taskId+"T"} class="blue">${taskHeading}</label><span class="ms-4" id="delete" onclick="deleteTask('${taskId}')">🚫</span><br>
               <ul>
                 <li>${taskDescription}</li>
               </ul>
