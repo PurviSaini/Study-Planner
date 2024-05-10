@@ -6,6 +6,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const User = require("./models/User");
+const Task= require("./models/Task");
 const port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -113,7 +114,42 @@ app.post("/login", async (req, res) => {
     res.status(500).send({ title: "Failed to login" });
   }
 });
+//get task
+app.get("/getTasks", async (req, res) => {
+  const userEmail = req.query.email;
+  try {
+    const tasks = await Task.find({ userEmail });
+    res.status(200).send(tasks);
+  } catch (error) {
+    console.error("Error during getting tasks:", error);
+    res.status(500).send({ title: "Failed to get tasks" });
+  }
+});
 
+//add task
+app.post("/addTask", async (req, res) => {
+  const { userEmail, taskTitle, taskDesc, startDate, dueDate } = req.body;
+  try {
+    const task = new Task({ userEmail, taskTitle, taskDesc, startDate, dueDate });
+    await task.save();
+    res.status(200).send({ title: "Task added successfully", taskId: task._id });
+  } catch (error) {
+    console.error("Error during adding task:", error);
+    res.status(500).send({ title: "Failed to add task" });
+  }
+});
+//delete task
+// Delete task
+app.delete("/deleteTask", async (req, res) => {
+  const taskId = req.query.taskId;
+  try {
+    await Task.findByIdAndDelete(taskId);
+    res.status(200).send({ title: "Task deleted successfully" });
+  } catch (error) {
+    console.error("Error during deleting task:", error);
+    res.status(500).send({ title: "Failed to delete task" });
+  }
+});
 app.listen(port, () => {
   console.log(`Server is running on port http://localhost:${port}`);
 });

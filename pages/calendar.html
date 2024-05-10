@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home | iStudy </title>
+    <title>Calendar | iStudy </title>
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +49,7 @@
 
       <div class="container-fluid">
         <div class="row justify-content-between">
-          <div class="col-md-8">
+          <div class="col-md-5">
             <div class="calendar-container">
               <header class="calendar-header">
                 <div class="calendar-current-date">
@@ -79,26 +79,12 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 tasks-and-goals">
+          <div class="col-md-7 tasks-and-goals">
             <!-- Daily Tasks and Weekly Goal -->
             <!-- Daily Tasks List -->
             <div class="tasks-list">
               <h3>Daily tasks</h3>
-              <input type="checkbox" id="task1" name="task1" checked>
-              <label for="task1">Task 1</label><br>
-              <ul>
-                <li>Details...</li>
-              </ul><br>
-              <input type="checkbox" id="task2" name="task2">
-              <label for="task2">Task 2</label><br>
-              <ul>
-                <li>Details...</li>
-              </ul><br>
-              <input type="checkbox" id="task3" name="task3" checked>
-              <label for="task3">Task 3</label><br>
-              <ul>
-                <li>Details...</li>
-              </ul>
+              <!-- populate tasks here from backend -->
             </div>
             <!-- Add Task Button -->
             <div class="add-task-btn">
@@ -158,6 +144,41 @@
   </div>
 </body>
 <script>
+
+
+  function getTasks(){
+    let userEmail=localStorage.getItem("email");
+    fetch(`/getTasks?email=${userEmail}`)
+    .then(response => response.json())
+    .then(data => {
+      let tasksList=document.querySelector(".tasks-list");
+      data.forEach(task=>{
+        tasksList.innerHTML+= `
+             <section id=${task._id}>
+              <input type="checkbox" id=${task._id+"T"}>
+                <label for=${task._id+"T"}>${task.taskTitle}</label><span id="delete" onclick="deleteTask('${task._id}')">❌</span><br>
+              <ul>
+                <li>${task.taskDesc}</li>
+              </ul>
+              </section>`
+              
+              
+      })
+    })
+  }
+  getTasks();
+
+  async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        return response.json();
+    }
+
   let userEmail=localStorage.getItem("email");
   document.getElementById("email").innerText=userEmail;
   document.getElementById("logout").addEventListener("click",()=>{
@@ -165,6 +186,54 @@
     window.location.href="/";
     
   })
+  // add new task
+  let submitTaskBtn=document.getElementById("task-submit");
+  submitTaskBtn.addEventListener('click',async (e)=>{
+    e.preventDefault();
+    let taskHeading=document.getElementById("input-task").value;
+    let taskDescription=document.getElementById("text-description").value;
+    let startDate = new Date();
+    let dueDate = new Date();
+    dueDate.setDate(startDate.getDate() + 1);
+
+    let taskObj={
+      userEmail:userEmail,
+      taskTitle:taskHeading,
+      taskDesc:taskDescription,
+      startDate:startDate,
+      dueDate:dueDate,
+    };
+    //need to make a post request for adding task
+    let response= await postData("/addTask",taskObj);
+    if(response.title=="Task added successfully"){
+      const taskId=response._id;
+      document.querySelector(".tasks-list").innerHTML+= `
+              <section id=${taskId}>
+              <input type="checkbox" id=${taskId+"T"}>
+                <label for=${taskId+"T"}>${taskHeading}</label><span id="delete" onclick="deleteTask('${taskId}')">❌</span><br>
+              <ul>
+                <li>${taskDescription}</li>
+              </ul>
+              </section>`
+    }
+    else{
+      alert("Task not added");
+    }
+  })
+
+  // Delete task
+    async function deleteTask(taskId) {
+      const response = await fetch(`/deleteTask?taskId=${taskId}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json();
+      // Handle the response from the backend
+      if (data.title=="Task deleted successfully") {
+        document.getElementById(taskId).remove();
+      } else {
+        alert('Failed to delete task');
+      }
+    }
 </script>
 <script src="/static/calendar.js"></script>
 

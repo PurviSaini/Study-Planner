@@ -3,7 +3,6 @@ const taskSchema = new mongoose.Schema({
     userEmail: {
         type: String,
         required: true,
-        unique: true
     },
     startDate: {
         type: Date,
@@ -21,6 +20,10 @@ const taskSchema = new mongoose.Schema({
     dueDate: {
         type: Date,
         required: true,
+    },
+    status: {
+        type:String,
+        default:""
     }
 });
 
