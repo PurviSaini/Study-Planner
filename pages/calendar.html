@@ -206,7 +206,7 @@
     //need to make a post request for adding task
     let response= await postData("/addTask",taskObj);
     if(response.title=="Task added successfully"){
-      const taskId=response._id;
+      const taskId=response.taskId;
       document.querySelector(".tasks-list").innerHTML+= `
               <section id=${taskId}>
               <input type="checkbox" id=${taskId+"T"}>
