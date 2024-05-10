@@ -44,37 +44,115 @@
     
     </ul>
     <div class="content mx-0 p-4">
-        <div class="calendar-container">
-            <header class="calendar-header">
-                <p class="calendar-current-date"></p>
-                <div class="calendar-navigation">
-                    <span id="calendar-prev"
-                          class="material-symbols-rounded">
-                    </span>
-                    <span id="calendar-next"
-                          class="material-symbols-rounded"></span>
-                    </span>
+      <div class="container-fluid">
+        <div class="row justify-content-between">
+          <div class="col-md-8">
+            <div class="calendar-container">
+              <header class="calendar-header">
+                <div class="calendar-current-date">
+                  <span class="month"></span> <span class="year"></span>
                 </div>
-            </header>
+                <div class="calendar-navigation">
+                  <span id="calendar-prev"
+                          class="material-symbols-rounded"><
+                  </span>
+                  <span id="calendar-next"
+                          class="material-symbols-rounded">></span>
+                  </span>
+                </div>
+              </header>
      
-            <div class="calendar-body">
+              <div class="calendar-body">
                 <ul class="calendar-weekdays">
-                    <li>Sun</li>
-                    <li>Mon</li>
-                    <li>Tue</li>
-                    <li>Wed</li>
-                    <li>Thu</li>
-                    <li>Fri</li>
-                    <li>Sat</li>
+                  <li>Sun</li>
+                  <li>Mon</li>
+                  <li>Tue</li>
+                  <li>Wed</li>
+                  <li>Thu</li>
+                  <li>Fri</li>
+                  <li>Sat</li>
                 </ul>
                 <ul class="calendar-dates"></ul>
+              </div>
             </div>
+          </div>
+          <div class="col-md-4 tasks-and-goals">
+            <!-- Daily Tasks and Weekly Goal -->
+            <!-- Daily Tasks List -->
+            <div class="tasks-list">
+              <h3>Daily tasks</h3>
+              <input type="checkbox" id="task1" name="task1" checked>
+              <label for="task1">Task 1</label><br>
+              <ul>
+                <li>Details...</li>
+              </ul><br>
+              <input type="checkbox" id="task2" name="task2">
+              <label for="task2">Task 2</label><br>
+              <ul>
+                <li>Details...</li>
+              </ul><br>
+              <input type="checkbox" id="task3" name="task3" checked>
+              <label for="task3">Task 3</label><br>
+              <ul>
+                <li>Details...</li>
+              </ul>
+            </div>
+            <!-- Add Task Button -->
+            <div class="add-task-btn">
+              <button type="button" class="btn btn-primary btn-sm add-task">Add Task</button>
+            </div>
+            <!-- Modal for adding task -->
+            <div id="myModal1" class="modal">
+              <div class="modal-content">
+                <div class="task-heading-add">
+                  <span>Add Task <span class="close">&times;</span> </span>
+                </div>
+                <div class="task-content">
+                  <form method="post">
+                    <label for="task-heading" id="label-task">Enter Task: </label>
+                    <input type="text" name="task-heading" id="input-task" required>
+                    <br>
+                    <label for="task-description" id="label-description">Enter details: </label><br>
+                    <textarea name="text-description" id="text-description" rows="3" cols="30"></textarea>
+                    <br>
+                    <button type="submit" id="task-submit">Add</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- divider -->
+            <div id="division"></div>
+            <!-- Weekly Goals -->
+            <div class="weekly-goal">
+              <h3>Weekly goal</h3>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <p>Description of the weekly goal...</p>
+              <!-- Add goal button -->
+              <button type="button" class="btn btn-primary btn-sm add-goal">Add Goal</button>
+            </div>
+            <!-- Modal for adding goal -->
+            <div id="myModal2" class="modal">
+              <div class="modal-content">
+                <div class="goal-heading-add">
+                  <span>Add Goal <span class="close">&times;</span> </span>
+                </div>
+                <div class="goal-content">
+                  <form method="post">
+                    <label for="goal-description" id="goal-description">Enter details: </label><br>
+                    <textarea name="text-description" id="goal-text-description" rows="3" cols="30"></textarea>
+                    <br>
+                    <button type="submit" id="goal-submit">Add</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="container flex-column">
-
-        </div>
+      </div>
     </div>
-    </div>
+  </div>
 </body>
 <script>
   let userEmail=localStorage.getItem("email");
