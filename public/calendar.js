@@ -4,8 +4,10 @@ let month = date.getMonth();
  
 const day = document.querySelector(".calendar-dates");
  
-const currdate = document
-    .querySelector(".calendar-current-date");
+const currmonth = document
+    .querySelector(".month");
+
+const curryear = document.querySelector(".year");
  
 const prenexIcons = document
     .querySelectorAll(".calendar-navigation span");
@@ -69,7 +71,8 @@ const manipulate = () => {
  
     // Update the text of the current date element 
     // with the formatted current month and year
-    currdate.innerText = `${months[month]} ${year}`;
+    currmonth.innerText = `${months[month]}`;
+    curryear.innerText = `${year}`;
  
     // update the HTML of the dates element 
     // with the generated calendar
@@ -113,3 +116,59 @@ prenexIcons.forEach(icon => {
         manipulate();
     });
 });
+
+// Get the modal element
+const modal1 = document.getElementById("myModal1");
+
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
+
+// Function to handle click event on calendar dates
+/*const handleDateClick = (e) => {
+    // Get the clicked date text
+    const clickedDate = e.target.innerText;
+
+    // Display the modal
+    modal.style.display = "block";
+
+    // Update modal content with the clicked date
+    document.querySelector(".task-content ul").innerHTML = `<li>You clicked on ${clickedDate}</li>`;
+}
+*/
+
+// Add click event listeners to all calendar dates
+const btn = document.querySelector(".add-task");
+btn.addEventListener("click", () => {
+    modal1.style.display = "block";
+});
+
+
+// Close the modal when the user clicks on the close (x) button
+span.onclick = function() {
+  modal1.style.display = "none";
+}
+
+// Close the modal when the user clicks outside of it
+window.onclick = function(event) {
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+  }
+}
+
+const modal2 = document.getElementById("myModal2");
+const span2 = document.querySelectorAll(".close")[1];
+const goalbtn = document.querySelector(".add-goal");
+goalbtn.addEventListener("click", () => {
+    modal2.style.display = "block";
+});
+
+span2.onclick = function() {
+    modal2.style.display = "none";
+  }
+  
+  // Close the modal when the user clicks outside of it
+  window.onclick = function(event) {
+    if (event.target == modal2) {
+      modal2.style.display = "none";
+    }
+  }
