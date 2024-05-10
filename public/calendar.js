@@ -137,8 +137,9 @@ const span = document.getElementsByClassName("close")[0];
 */
 
 // Add click event listeners to all calendar dates
-const btn = document.querySelector(".add-task");
+const btn = document.querySelector("#add-task");
 btn.addEventListener("click", () => {
+    console.log("Add Task");
     modal1.style.display = "block";
 });
 
@@ -157,9 +158,35 @@ window.onclick = function(event) {
 
 const modal2 = document.getElementById("myModal2");
 const span2 = document.querySelectorAll(".close")[1];
-const goalbtn = document.querySelector(".add-goal");
-goalbtn.addEventListener("click", () => {
-    modal2.style.display = "block";
+const dates = document.querySelectorAll(".calendar-dates li");
+
+const addGoal = (e) => {
+    const clickedDate = e.target.innerText;
+    const clickedMonth = document.querySelector(".month").innerText;
+    let clickMonthno = 0;
+    for(let i=0;i<12;i=i+1)
+    {
+        if(clickedMonth == months[i])
+        {
+            clickedMonthno = i;
+            break;
+        }
+    }
+    const clickedYear = document.querySelector(".year").innerText;
+    const clickedDateSet = new Date(clickedYear, clickedMonthno, clickedDate);
+    const currentDate = new Date();
+    if(clickedDateSet > currentDate)
+    {
+        modal2.style.display = "block";
+    }
+    else
+    {
+        alert(`Click on an upcoming date!`);
+    }
+}
+
+dates.forEach(aDate => {
+    aDate.addEventListener("click", addGoal);
 });
 
 span2.onclick = function() {
@@ -167,8 +194,52 @@ span2.onclick = function() {
   }
   
   // Close the modal when the user clicks outside of it
-  window.onclick = function(event) {
-    if (event.target == modal2) {
-      modal2.style.display = "none";
-    }
-  }
+//   window.onclick = function(event) {
+//     if (event.target == modal2) {
+//       modal2.style.display = "none";
+//     }
+//   }
+
+// count checkboxes
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+console.log(checkboxes.length);
+const countCheckedBoxes = () => {
+    let progress = 0;
+    let checkedCount=0;
+    let totalCount = 0;
+    checkboxes.forEach(checkbox => {
+        if(checkbox.checked) {
+            checkedCount++;
+        }
+        totalCount++;
+    });
+    progress = (checkedCount*100)/totalCount;
+    document.querySelector(".progress-bar").ariaValueNow = progress;
+    document.querySelector(".progress-bar").style.width = progress+"%";
+    console.log(progress);
+}
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener("click", countCheckedBoxes);
+});
+
+countCheckedBoxes();
+
+  const addSubT = document.querySelector(".add-subtask");
+
+  addSubT.addEventListener("click", (e) => {
+      e.preventDefault();
+      
+      document.querySelector(".div-subtask").style.display="block";
+  })
+  
+  const addSubTask = document.getElementById("subtask-submit");
+  let subT = "";
+  addSubTask.addEventListener("click", (e) => {
+      e.preventDefault();
+      const subTList = document.querySelector(".subtasks");
+      let subTask = document.getElementById("subtask").value;
+      subT += `<li>${subTask}</li>`;
+      subTList.innerHTML = subT;
+      document.querySelector(".div-subtask").style.display="none";
+  })

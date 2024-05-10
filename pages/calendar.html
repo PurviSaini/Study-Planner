@@ -79,16 +79,16 @@
               </div>
             </div>
           </div>
-          <div class="col-md-7 tasks-and-goals">
+          <div class="col-md-5 tasks-and-goals">
             <!-- Daily Tasks and Weekly Goal -->
             <!-- Daily Tasks List -->
             <div class="tasks-list">
-              <h3>Daily tasks</h3>
+                <h3>Daily tasks</h3>
               <!-- populate tasks here from backend -->
             </div>
             <!-- Add Task Button -->
             <div class="add-task-btn">
-              <button type="button" class="btn btn-primary btn-sm add-task">Add Task</button>
+            <button type="button" class="btn btn-primary btn-sm add-task" id="add-task">Add Task</button>
             </div>
             <!-- Modal for adding task -->
             <div id="myModal1" class="modal">
@@ -115,11 +115,10 @@
             <div class="weekly-goal">
               <h3>Weekly goal</h3>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <p>Description of the weekly goal...</p>
+              <ol class="goals"></ol>
               <!-- Add goal button -->
-              <button type="button" class="btn btn-primary btn-sm add-goal">Add Goal</button>
             </div>
             <!-- Modal for adding goal -->
             <div id="myModal2" class="modal">
@@ -130,9 +129,16 @@
                 <div class="goal-content">
                   <form method="post">
                     <label for="goal-description" id="goal-description">Enter details: </label><br>
-                    <textarea name="text-description" id="goal-text-description" rows="3" cols="30"></textarea>
+                    <input type="text" name="goal-description" id="input-goal" required>
                     <br>
-                    <button type="submit" id="goal-submit">Add</button>
+                    <span>Add subtasks  </span><button class="add-subtask"> + </button><br>
+                    <div class="div-subtask">
+                      <input type="text" for="subtask" id="subtask"><button id="subtask-submit">Add</button><br>
+                    </div>
+                    <div class="subtasks-ul">
+                      <ul class="subtasks"></ul><br>
+                    </div>
+                    <button type="submit" id="goal-submit">Add Goal</button>
                   </form>
                 </div>
               </div>
@@ -206,7 +212,7 @@
     //need to make a post request for adding task
     let response= await postData("/addTask",taskObj);
     if(response.title=="Task added successfully"){
-      const taskId=response._id;
+      const taskId=response.taskId;
       document.querySelector(".tasks-list").innerHTML+= `
               <section id=${taskId}>
               <input type="checkbox" id=${taskId+"T"}>
