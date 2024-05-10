@@ -172,3 +172,24 @@ span2.onclick = function() {
       modal2.style.display = "none";
     }
   }
+
+  //shows the input field to add a subtask
+  const addSubT = document.querySelector(".add-subtask");
+
+  addSubT.addEventListener("click", (e) => {
+      e.preventDefault();
+      
+      document.querySelector(".div-subtask").style.display="block";
+  })
+  
+  //adds the written subtask in the input text field in an unordered list to be shown
+  const addSubTask = document.getElementById("subtask-submit");
+  let subT = "";
+  addSubTask.addEventListener("click", (e) => {
+      e.preventDefault();
+      const subTList = document.querySelector(".subtasks");
+      let subTask = document.getElementById("subtask").value;
+      subT += `<li>${subTask}</li>`;
+      subTList.innerHTML = subT;
+      document.querySelector(".div-subtask").style.display="none";
+  })

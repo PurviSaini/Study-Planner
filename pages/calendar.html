@@ -128,7 +128,7 @@
               <div class="progress">
                 <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <p>Description of the weekly goal...</p>
+              <ol class="goals"></ol>
               <!-- Add goal button -->
               <button type="button" class="btn btn-primary btn-sm add-goal">Add Goal</button>
             </div>
@@ -140,10 +140,17 @@
                 </div>
                 <div class="goal-content">
                   <form method="post">
-                    <label for="goal-description" id="goal-description">Enter details: </label><br>
-                    <textarea name="text-description" id="goal-text-description" rows="3" cols="30"></textarea>
+                    <label for="goal-description" id="goal-description">Enter title: </label><br>
+                    <input type="text" name="goal-description" id="input-goal" required>
                     <br>
-                    <button type="submit" id="goal-submit">Add</button>
+                    <span>Add subtasks  </span><button class="add-subtask"> + </button><br>
+                    <div class="div-subtask">
+                      <input type="text" for="subtask" id="subtask"><button id="subtask-submit">Add</button><br>
+                    </div>
+                    <div class="subtasks-ul">
+                      <ul class="subtasks"></ul><br>
+                    </div>
+                    <button id="goal-submit">Add Goal</button>
                   </form>
                 </div>
               </div>
