@@ -171,6 +171,9 @@
       })
       checkboxes=document.querySelectorAll('input[type="checkbox"]');
      console.log("script tag: ",checkboxes);
+     checkboxes.forEach(checkbox => {
+     checkbox.addEventListener("click", countCheckedBoxes);
+      });
     })
   }
   getTasks();
@@ -224,6 +227,9 @@
               </section>`;
        checkboxes=document.querySelectorAll('input[type="checkbox"]');
      console.log("script tag: ",checkboxes);
+     checkboxes.forEach(checkbox => {
+     checkbox.addEventListener("click", countCheckedBoxes);
+      });
     // console.log("script tag: ",document.querySelectorAll('input[type="checkbox"]'));
 
     }
@@ -241,6 +247,12 @@
       // Handle the response from the backend
       if (data.title=="Task deleted successfully") {
         document.getElementById(taskId).remove();
+        checkboxes=document.querySelectorAll('input[type="checkbox"]');
+        console.log("script tag: ",checkboxes);
+    //     checkboxes.forEach(checkbox => {
+    //  checkbox.addEventListener("click", countCheckedBoxes);
+    //   });
+        countCheckedBoxes();
       } else {
         alert('Failed to delete task');
       }
