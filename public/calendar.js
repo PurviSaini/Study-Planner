@@ -223,10 +223,9 @@ const countCheckedBoxes = async() => {
             let response = await setStatus(checkbox.id.slice(0, -1),"");
             upcomingTaskTitles.push(document.querySelector(`label[for="${checkbox.id}"]`).innerText);
         }
-        localStorage.setItem("upcomingTaskTitles", JSON.stringify(upcomingTaskTitles));
         totalCount++;
     }
-
+    localStorage.setItem("upcomingTaskTitles", JSON.stringify(upcomingTaskTitles));
     progress = (checkedCount*100)/totalCount;
     document.querySelector(".progress-bar").ariaValueNow = progress;
     document.querySelector(".progress-bar").style.width = progress+"%";

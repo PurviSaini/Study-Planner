@@ -168,6 +168,7 @@
               </section>`        
       })
       checkboxes=document.querySelectorAll('input[type="checkbox"]');
+      countCheckedBoxes();
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener("click", countCheckedBoxes);
       });
@@ -223,6 +224,7 @@
               </ul>
               </section>`;
       checkboxes=document.querySelectorAll('input[type="checkbox"]');
+      countCheckedBoxes();
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener("click", countCheckedBoxes);
       });
