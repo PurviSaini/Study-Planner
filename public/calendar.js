@@ -123,26 +123,12 @@ const modal1 = document.getElementById("myModal1");
 // Get the <span> element that closes the modal
 const span = document.getElementsByClassName("close")[0];
 
-// Function to handle click event on calendar dates
-/*const handleDateClick = (e) => {
-    // Get the clicked date text
-    const clickedDate = e.target.innerText;
-
-    // Display the modal
-    modal.style.display = "block";
-
-    // Update modal content with the clicked date
-    document.querySelector(".task-content ul").innerHTML = `<li>You clicked on ${clickedDate}</li>`;
-}
-*/
-
-// Add click event listeners to all calendar dates
+// Add click event listeners to the button
 const btn = document.querySelector("#add-task");
 btn.addEventListener("click", () => {
     console.log("Add Task");
     modal1.style.display = "block";
 });
-
 
 // Close the modal when the user clicks on the close (x) button
 span.onclick = function() {
@@ -156,10 +142,14 @@ window.onclick = function(event) {
   }
 }
 
+// Get the modal element
 const modal2 = document.getElementById("myModal2");
-const span2 = document.querySelectorAll(".close")[1];
-const dates = document.querySelectorAll(".calendar-dates li");
 
+// Get the <span> element that closes the modal
+const span2 = document.querySelectorAll(".close")[1];
+
+// Add click event listeners to all the calendar dates
+const dates = document.querySelectorAll(".calendar-dates li");
 const addGoal = (e) => {
     const clickedDate = e.target.innerText;
     const clickedMonth = document.querySelector(".month").innerText;
@@ -184,24 +174,16 @@ const addGoal = (e) => {
         alert(`Click on an upcoming date!`);
     }
 }
-
 dates.forEach(aDate => {
     aDate.addEventListener("click", addGoal);
 });
 
+// Close the modal when the user clicks on the close (x) button
 span2.onclick = function() {
     modal2.style.display = "none";
   }
-  
-  // Close the modal when the user clicks outside of it
-//   window.onclick = function(event) {
-//     if (event.target == modal2) {
-//       modal2.style.display = "none";
-//     }
-//   }
 
-// count checkboxes
-// const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+//update the status of checkboxes in the backend
 function setStatus(taskId){
 fetch('/updateStatus', {
     method: 'POST',
@@ -224,8 +206,8 @@ fetch('/updateStatus', {
     });
 }
 
+// count checkboxes
 let progress = 0;
-
 const countCheckedBoxes = async() => {
     let checkedCount=0;
     let totalCount = 0;
@@ -247,25 +229,23 @@ const countCheckedBoxes = async() => {
     document.querySelector(".progress-bar").ariaValueNow = progress;
     document.querySelector(".progress-bar").style.width = progress+"%";
     localStorage.setItem("progress", progress);
-    // console.log(progress);
 }
 
+//Add subtasks for goals
+const addSubT = document.querySelector(".add-subtask");
+addSubT.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.querySelector(".div-subtask").style.display="block";
+})
 
-  const addSubT = document.querySelector(".add-subtask");
-
-  addSubT.addEventListener("click", (e) => {
-      e.preventDefault();
-      
-      document.querySelector(".div-subtask").style.display="block";
-  })
-  
-  const addSubTask = document.getElementById("subtask-submit");
-  let subT = "";
-  addSubTask.addEventListener("click", (e) => {
-      e.preventDefault();
-      const subTList = document.querySelector(".subtasks");
-      let subTask = document.getElementById("subtask").value;
-      subT += `<li>${subTask}</li>`;
-      subTList.innerHTML = subT;
-      document.querySelector(".div-subtask").style.display="none";
-  })
+//display subtasks on adding
+const addSubTask = document.getElementById("subtask-submit");
+let subT = "";
+addSubTask.addEventListener("click", (e) => {
+    e.preventDefault();
+    const subTList = document.querySelector(".subtasks");
+    let subTask = document.getElementById("subtask").value;
+    subT += `<li class="font2">${subTask}</li>`;
+    subTList.innerHTML = subT;
+    document.querySelector(".div-subtask").style.display="none";
+})

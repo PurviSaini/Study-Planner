@@ -21,6 +21,7 @@
 
 <body>
   <div class="outer container-fluid d-flex px-0">
+    <!-- Navbar -->
     <ul class="nav flex-column py-4">
       <li class="nav-item my-2 " >
         <div class="dropdown">
@@ -32,7 +33,6 @@
             <li><a class="dropdown-item" href="#" id="logout">LogOut</a></li>
           </ul>
         </div>
-        <!-- <a class="nav-link"><img src="https://media-public.canva.com/kxWWM/MAEr6SkxWWM/1/tl.png" alt="calendar" width="40px" height="40px"></a> -->
       </li>
 
       <li class="nav-item my-2">
@@ -43,43 +43,47 @@
       </li>
     
     </ul>
+    <!-- Home Page Content -->
     <div class="content mx-0 p-4">
-      <!-- Home Page Content -->
       <div class="row justify-content-center" style="height: 95%;">
+        <!-- Upcoming Tasks -->
         <div class="col-5 my-md-4">
-            <div class="container tasks" id="upcoming">
-                <h2 class="text-start">Hey  <span class="fs-1 text-uppercase pink"></span>,</h2>
-                <br>
-                <h3 class="blue">Upcoming Tasks</h3>
-                <ul id="upcomingTask">
-                    <li>--No pending tasks--</li>
-                </ul>
-            </div>
+          <div class="container tasks" id="upcoming">
+            <h2 class="text-start">Hey  <span class="fs-2 text-uppercase pink font2"></span>,</h2>
+            <h3 class="blue">Upcoming Tasks</h3>
+            <ul id="upcomingTask">
+              <li>--No pending tasks--</li>
+            </ul>
+          </div>
         </div>
         <div class="col-6">
-            <div class="row">
-                <div class="col px-md-5 pt-md-4 mb-4">
-                    <div class="container tasks" id="goals">
-                            <h3 class="pink">My Goal</h3>
-                            <p class="blue">Due date: </p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id ab repellat voluptatibus suscipit iusto odio aperiam amet labore nulla non quae est reprehenderit harum nostrum culpa, nobis officiis! Dolore, placeat.</p>
-                    </div>
-                </div>
+          <!-- Goals -->
+          <div class="row">
+            <div class="col px-md-5 pt-md-4 mb-4">
+              <div class="container tasks" id="goals">
+                <h3 class="pink">My Goal</h3>
+                <p class="blue">Due date: </p>
+                <p class="font2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id ab repellat voluptatibus suscipit iusto odio aperiam amet labore nulla non quae est reprehenderit harum nostrum culpa, nobis officiis! Dolore, placeat.</p>
+              </div>
             </div>
-            <div class="row">
-                <div class="col px-md-5 pb-lg-4">
-                    <div class="container tasks" id="progress">
-                        <h2>Progress</h2>
-                        <div class="progress-bar">
-                            <div class="progress-value"></div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <!-- Daily Progress -->
+          <div class="row">
+            <div class="col px-md-5 pb-lg-4">
+              <div class="container tasks" id="progress">
+                <center>
+                  <h3>Daily Progress</h3>
+                  <div class="progress-bar">
+                    <div class="progress-value"></div>
+                  </div>
+                </center>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-    </div>
+  </div>
 </body>
 <script>
   function getProgressFromLocalStorage() {
@@ -89,7 +93,8 @@
     }
     return 0;
   }
-   function updateUpcomingTasks() {
+  // Set upcoming tasks on the homepage
+  function updateUpcomingTasks() {
     let upcomingValue = localStorage.getItem("upcomingTaskTitles");
     if (upcomingValue) {
       upcomingValue = JSON.parse(upcomingValue);
@@ -101,7 +106,9 @@
         upcomingTaskList.appendChild(taskItem);
       }
     }
-}
+  }
+
+  // Set logged in email
   let progress=getProgressFromLocalStorage();
   let userEmail=localStorage.getItem("email");
   document.getElementById("email").innerText=userEmail;
@@ -109,10 +116,19 @@
     localStorage.removeItem("email");
     window.location.href="/";
   })
+
   window.onload = () => {
-    document.querySelector(".progress-bar").style.background = `radial-gradient(closest-side, #ffffff 79%, transparent 80% 100%), conic-gradient(#cd006f ${progress}%, #ed8abf 0`;
-    document.querySelector(".progress-value").innerText = `${progress}%`;
+    if(progress>0){
+      document.querySelector(".progress-bar").style.background = `radial-gradient(closest-side, #ffffff 79%, transparent 80% 100%), conic-gradient(#cd006f ${progress}%, #ed8abf 0`;
+      document.querySelector(".progress-value").innerText = `${progress}%`;
+    }
+    else
+    {
+      document.querySelector(".progress-bar").style.background = `radial-gradient(closest-side, #ffffff 79%, transparent 80% 100%), conic-gradient(#cd006f 0%, #ed8abf 0`;
+      document.querySelector(".progress-value").innerText = `0%`;
+    }
   }
+
   //set username
   document.querySelector("h2 span").innerText=userEmail.split("@")[0];
   updateUpcomingTasks();
@@ -121,6 +137,4 @@
     progress=getProgressFromLocalStorage();
   });
 </script>
-
-
 </html>
