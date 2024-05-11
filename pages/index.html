@@ -50,7 +50,7 @@
         <div class="col-5 my-md-4">
           <div class="container tasks" id="upcoming">
             <h2 class="text-start">Hey  <span class="fs-2 text-uppercase pink font2"></span>,</h2>
-            <h3 class="blue">Upcoming Tasks</h3>
+            <h3 class="blue mb-3">Upcoming Tasks</h3>
             <ul id="upcomingTask">
               <li>--No pending tasks--</li>
             </ul>
@@ -86,39 +86,10 @@
   </div>
 </body>
 <script>
-  function getProgressFromLocalStorage() {
-    let progressValue = localStorage.getItem("progress");
-    if (progressValue) {
-      return parseInt(progressValue);
-    }
-    return 0;
-  }
-  // Set upcoming tasks on the homepage
-  function updateUpcomingTasks() {
-    let upcomingValue = localStorage.getItem("upcomingTaskTitles");
-    if (upcomingValue) {
-      upcomingValue = JSON.parse(upcomingValue);
-      let upcomingTaskList = document.getElementById("upcomingTask");
-      upcomingTaskList.innerHTML = "";
-      for (let i = 0; i < upcomingValue.length; i++) {
-        let taskItem = document.createElement("li");
-        taskItem.innerText = upcomingValue[i];
-        upcomingTaskList.appendChild(taskItem);
-      }
-    }
-  }
-
-  // Set logged in email
-  let progress=getProgressFromLocalStorage();
-  let userEmail=localStorage.getItem("email");
-  document.getElementById("email").innerText=userEmail;
-  document.getElementById("logout").addEventListener("click",()=>{
-    localStorage.removeItem("email");
-    window.location.href="/";
-  })
-
-  window.onload = () => {
-    if(progress>0){
+  function updateProgress() {
+    let progress = localStorage.getItem("progress");
+    progress=parseInt(progress);
+    if(progress){
       document.querySelector(".progress-bar").style.background = `radial-gradient(closest-side, #ffffff 79%, transparent 80% 100%), conic-gradient(#cd006f ${progress}%, #ed8abf 0`;
       document.querySelector(".progress-value").innerText = `${progress}%`;
     }
@@ -128,13 +99,41 @@
       document.querySelector(".progress-value").innerText = `0%`;
     }
   }
+  // Set upcoming tasks on the homepage
+  function updateUpcomingTasks() {
+    let upcomingValue = localStorage.getItem("upcomingTaskTitles");
+    upcomingValue = JSON.parse(upcomingValue);
+    if (upcomingValue.length) {
+      let upcomingTaskList = document.getElementById("upcomingTask");
+      upcomingTaskList.innerHTML = "";
+      for (let i = 0; i < upcomingValue.length; i++) {
+        let taskItem = document.createElement("li");
+        taskItem.innerText = upcomingValue[i];
+        upcomingTaskList.appendChild(taskItem);
+      }
+    }
+    else{
+      //if local Storage doesnot have any upcoming tasks, so display a message
+      document.getElementById("upcomingTask").innerHTML = `<p style="font-size:x-large">--No pending tasks--</p>`;
+    }
+  }
+
+  // Set logged in email
+  let userEmail=localStorage.getItem("email");
+  document.getElementById("email").innerText=userEmail;
+  document.getElementById("logout").addEventListener("click",()=>{
+    localStorage.removeItem("email");
+    window.location.href="/";
+  })
 
   //set username
   document.querySelector("h2 span").innerText=userEmail.split("@")[0];
   updateUpcomingTasks();
+  updateProgress();
+
   window.addEventListener("storage", (event) => {
     updateUpcomingTasks();
-    progress=getProgressFromLocalStorage();
+    updateProgress();
   });
 </script>
 </html>

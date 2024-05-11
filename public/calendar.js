@@ -227,6 +227,9 @@ const countCheckedBoxes = async() => {
     }
     localStorage.setItem("upcomingTaskTitles", JSON.stringify(upcomingTaskTitles));
     progress = (checkedCount*100)/totalCount;
+    if(!progress){
+        progress=0;
+    }
     document.querySelector(".progress-bar").ariaValueNow = progress;
     document.querySelector(".progress-bar").style.width = progress+"%";
     localStorage.setItem("progress", progress);
