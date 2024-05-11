@@ -148,11 +148,13 @@ const modal2 = document.getElementById("myModal2");
 // Get the <span> element that closes the modal
 const span2 = document.querySelectorAll(".close")[1];
 
-// Add click event listeners to all the calendar dates
-const dates = document.querySelectorAll(".calendar-dates li");
-const addGoal = (e) => {
-    const clickedDate = e.target.innerText;
-    const clickedMonth = document.querySelector(".month").innerText;
+day.addEventListener("click", (event) => {
+    // Check if the clicked element is a date element (li)
+    if (event.target.tagName === "LI") {
+        const clickedDateEl = event.target;
+      const clickedDate = event.target.innerText;
+      // ... (rest of the addGoal function logic)
+      const clickedMonth = document.querySelector(".month").innerText;
     let clickedMonthno = 0;
     for(let i=0;i<12;i=i+1)
     {
@@ -165,22 +167,60 @@ const addGoal = (e) => {
     const clickedYear = document.querySelector(".year").innerText;
     const clickedDateSet = new Date(clickedYear, clickedMonthno, clickedDate);
     const currentDate = new Date();
-    if(clickedDateSet > currentDate)
+    if(clickedDateSet > currentDate && !clickedDateEl.classList.contains("goal-set"))
     {
         modal2.style.display = "block";
+    }
+    else if(clickedDateEl.classList.contains("goal-set"))
+    {
     }
     else
     {
         alert(`Click on an upcoming date!`);
     }
-}
-dates.forEach(aDate => {
-    aDate.addEventListener("click", addGoal);
-});
+    }
+  });
+
+// Add click event listeners to all the calendar dates
+// const dates = document.querySelectorAll(".calendar-dates li");
+// const addGoal = (e) => {
+//     const clickedDate = e.target.innerText;
+//     const clickedMonth = document.querySelector(".month").innerText;
+//     let clickedMonthno = 0;
+//     for(let i=0;i<12;i=i+1)
+//     {
+//         if(clickedMonth == months[i])
+//         {
+//             clickedMonthno = i;
+//             break;
+//         }
+//     }
+//     const clickedYear = document.querySelector(".year").innerText;
+//     const clickedDateSet = new Date(clickedYear, clickedMonthno, clickedDate);
+//     const currentDate = new Date();
+//     if(clickedDateSet > currentDate)
+//     {
+//         modal2.style.display = "block";
+//     }
+//     else
+//     {
+//         alert(`Click on an upcoming date!`);
+//     }
+// }
+// dates.forEach(aDate => {
+//     aDate.addEventListener("click", addGoal);
+// });
 
 // Close the modal when the user clicks on the close (x) button
 span2.onclick = function() {
     modal2.style.display = "none";
+  }
+
+// Close the modal when the user clicks outside of it
+window.onclick = function(event) {
+    if (event.target == modal2) {
+      modal2.style.display = "none";
+    }
   }
 
 //update the status of checkboxes in the backend

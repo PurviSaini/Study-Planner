@@ -82,13 +82,13 @@
           <!-- Daily Tasks and Weekly Goal -->
           <div class="col-md-5 tasks-and-goals">
             <!-- Daily Tasks List -->
+            <h3>Daily tasks</h3>
             <div class="tasks-list">
-              <h3>Daily tasks</h3>
               <!-- populate tasks here from backend -->
             </div>
             <!-- Add Task Button -->
             <div class="add-task-btn">
-            <button type="button" class="btn btn-primary btn-sm add-task" id="add-task">Add Task</button>
+              <button type="button" class="btn btn-primary btn-sm add-task" id="add-task">Add Task</button>
             </div>
             <!-- Modal for adding task -->
             <div id="myModal1" class="modal">
@@ -109,14 +109,15 @@
                 </div>
               </div>
             </div>
+            <h5>Daily Progress</h5>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
             <!-- divider -->
             <div id="division"></div>
             <!-- Weekly Goals -->
             <div class="weekly-goal">
               <h3>Weekly goal</h3>
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
               <ol class="goals"></ol>
             </div>
             <!-- Modal for adding goal -->
@@ -271,7 +272,7 @@
               console.log(goals);
               const goalsList = document.querySelector(".goals");
               goalsList.innerHTML = "";
-                goalsList.innerHTML += `<h3>📍${goals.goalTitle}</h3><span> Due Date: ${goals.dueDate.substring(0, 10)}</span>`;
+                goalsList.innerHTML += `<h5>📍${goals.goalTitle}</h5><span> Due Date: ${goals.dueDate.substring(0, 10)}</span>`;
                 goals.subTasks.forEach(subTask => {
                   goalsList.innerHTML += `<li>${subTask}</li>`;
               });
@@ -309,7 +310,7 @@ goalSubmitBtn.addEventListener("click", async(e) => {
     if (response.title=="Goal added successfully") {
       alert("Goal added successfully");
       console.log(goalTitle);
-      document.querySelector(".goals").innerHTML = `<h3>📍${goalTitle}</h3>`;
+      document.querySelector(".goals").innerHTML = `<h5>📍${goalTitle}</h5>`;
       subTaskList.forEach(subTask => {
         document.querySelector(".goals").innerHTML += `<li>${subTask}</li>`;
       });
