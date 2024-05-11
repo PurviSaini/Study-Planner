@@ -71,7 +71,7 @@
                     <div class="container tasks" id="progress">
                         <h2>Progress</h2>
                         <div class="progress-bar">
-                            <div class="progress-value">75%</div>
+                            <div class="progress-value"></div>
                         </div>
                     </div>
                 </div>
@@ -109,6 +109,10 @@
     localStorage.removeItem("email");
     window.location.href="/";
   })
+  window.onload = () => {
+    document.querySelector(".progress-bar").style.background = `radial-gradient(closest-side, #ffffff 79%, transparent 80% 100%), conic-gradient(#cd006f ${progress}%, #ed8abf 0`;
+    document.querySelector(".progress-value").innerText = `${progress}%`;
+  }
   //set username
   document.querySelector("h2 span").innerText=userEmail.split("@")[0];
   updateUpcomingTasks();
