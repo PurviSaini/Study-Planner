@@ -14,9 +14,11 @@
     color:#cd006f;
   }
 .outer{
+    background-image: url("https://media-public.canva.com/Up4BI/MAFPkEUp4BI/1/tl.jpg");
     height: 100vh;
 }
 .content{
+    backdrop-filter: blur(1px);
     width: 100vw;
 }
 .goal-set{
@@ -44,7 +46,6 @@
     background: #fff;
     width: 450px;
     border-radius: 10px;
-    margin-left: 10%;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
  
@@ -204,6 +205,7 @@ header .calendar-current-date {
   }
 
 .tasks-and-goals {
+    background-color: white;
     display: flex;
     flex-direction: column;
     top: 0;
