@@ -202,22 +202,47 @@ span2.onclick = function() {
 
 // count checkboxes
 // const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+function setStatus(taskId){
+fetch('/updateStatus', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        taskId: taskId
+    })
+})
+    .then(response => {
+        if (response.ok) {
+            console.log('Status updated successfully');
+        } else {
+            console.log('Failed to update status');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 let progress = 0;
 
-const countCheckedBoxes = () => {
+const countCheckedBoxes = async() => {
     let checkedCount=0;
     let totalCount = 0;
     let upcomingTaskTitles=[];
-    checkboxes.forEach(checkbox => {
+    for (let checkbox of checkboxes) {
         if(checkbox.checked) {
             checkedCount++;
+            //set the status of the task in backend
+            let response = await setStatus(checkbox.id.slice(0, -1));
         }
         else{
             upcomingTaskTitles.push(document.querySelector(`label[for="${checkbox.id}"]`).innerText);
         }
         localStorage.setItem("upcomingTaskTitles", JSON.stringify(upcomingTaskTitles));
         totalCount++;
-    });
+    }
+
     progress = (checkedCount*100)/totalCount;
     document.querySelector(".progress-bar").ariaValueNow = progress;
     document.querySelector(".progress-bar").style.width = progress+"%";

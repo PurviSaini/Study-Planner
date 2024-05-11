@@ -158,9 +158,10 @@
     .then(data => {
       let tasksList=document.querySelector(".tasks-list");
       data.forEach(task=>{
+
         tasksList.innerHTML+= `
              <section id=${task._id}>
-              <input type="checkbox" id=${task._id+"T"}>
+              <input type="checkbox" id=${task._id+"T"} ${task.status}>
                 <label for=${task._id+"T"} class="blue">${task.taskTitle}</label><span class="ms-4" id="delete" onclick="deleteTask('${task._id}')">🚫</span><br>
               <ul>
                 <li>${task.taskDesc}</li>

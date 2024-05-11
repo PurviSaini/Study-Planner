@@ -150,6 +150,21 @@ app.delete("/deleteTask", async (req, res) => {
     res.status(500).send({ title: "Failed to delete task" });
   }
 });
+// Update task status
+app.post("/updateStatus", async (req, res) => {
+  const { taskId } = req.body;
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(taskId, { status: "checked" });
+    if (!updatedTask) {
+      return res.status(404).send({ title: "Task not found" });
+    }
+    res.status(200).send({ title: "Task status updated successfully" });
+  } catch (error) {
+    console.error("Error during updating task status:", error);
+    res.status(500).send({ title: "Failed to update task status" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port http://localhost:${port}`);
 });
