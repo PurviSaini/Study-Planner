@@ -19,6 +19,10 @@
 .content{
     width: 100vw;
 }
+.goal-set{
+    border: yellow 2px solid;
+    border-radius: 23px;
+}
 * {
     font-family: "Poetsen One", sans-serif;
     font-weight: 400;

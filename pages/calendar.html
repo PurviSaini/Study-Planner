@@ -249,6 +249,112 @@
       alert('Failed to delete task');
     }
   }
+  let clickDate;
+  let clickDateEle;
+    // Function to handle click event on calendar dates
+    let calendarDates = document.querySelector(".calendar-dates");
+    calendarDates.addEventListener("click", async function(event) {
+      // Handle the click event here
+    clickDateEle=event.target;
+    const month = months.indexOf(document.querySelector(".month").innerText); // Example month value
+    const year =  parseInt(document.querySelector(".year").innerText); // Example year value
+    const day = parseInt(event.target.innerText); // Example day number value
+    // Create a new Date object using the given month, year, and day
+     clickDate = new Date(year, month, day+1);
+    // Use the date object as needed
+    if(clickDateEle.classList.contains("goal-set")){
+      const userEmail = localStorage.getItem("email");
+      await postData("/getGoals", { userEmail, clickDate })
+            .then(response => {
+
+              const goals = response;
+              console.log(goals);
+              const goalsList = document.querySelector(".goals");
+              goalsList.innerHTML = "";
+                goalsList.innerHTML += `<h3>📍${goals.goalTitle}</h3><span> Due Date: ${goals.dueDate.substring(0, 10)}</span>`;
+                goals.subTasks.forEach(subTask => {
+                  goalsList.innerHTML += `<li>${subTask}</li>`;
+              });
+            })
+            .catch(error => {
+              console.log("Error:", error);
+            });
+
+    }
+    });
+  // submit weekly goals
+let goalSubmitBtn=document.querySelector("#goal-submit");
+goalSubmitBtn.addEventListener("click", async(e) => {
+    e.preventDefault();
+    const userEmail = localStorage.getItem("email");
+    let goalTitle = document.querySelector("#input-goal").value;
+    let goalSubtasks = document.querySelectorAll(".subtasks li");
+    let startDate = clickDate;
+    let dueDate =new Date();
+    dueDate.setDate(startDate.getDate() + 7);
+
+    let subTaskList = [];
+    for(let i=0;i<goalSubtasks.length;i++)
+    {
+        subTaskList.push(goalSubtasks[i].innerText);
+    }
+    let goalObj={
+      userEmail:userEmail,
+      goalTitle:goalTitle,
+      subTasks:subTaskList,
+      startDate:startDate,
+      dueDate:dueDate,
+    };
+    let response = await postData("/addGoal", goalObj);
+    if (response.title=="Goal added successfully") {
+      alert("Goal added successfully");
+      console.log(goalTitle);
+      document.querySelector(".goals").innerHTML = `<h3>📍${goalTitle}</h3>`;
+      subTaskList.forEach(subTask => {
+        document.querySelector(".goals").innerHTML += `<li>${subTask}</li>`;
+      });
+      clickDateEle.classList.add("goal-set");
+    } else {
+        console.log('Failed to add goal');
+    }
+})
+// Function to get goal dates and add class goal-set
+//get goals
+// Function to get goals for a clickDate
+// async function getGoalsForDate(clickDate) {
+//   const response = await fetch(`/getGoals?clickDate=${clickDate}`);
+//   const data = await response.json();
+//   // Handle the response from the backend
+//   if (response.ok) {
+//     const goals = data.goals;
+//     // Process the goals data here
+//     console.log(goals);
+//   } else {
+//     console.log('Failed to get goals');
+//   }
+// }
+
+        // Function to get goal dates and add class goal-set
+        async function  getGoalDates() {
+      const userEmail = localStorage.getItem("email");
+          await postData("/getGoalDates", { userEmail })
+            .then(response => {
+              console.log(response);
+              const goalDates = response;
+              const calendarDates = document.querySelector(".calendar-dates");
+              const activeLiElements = Array.from(calendarDates.childNodes).filter(node => !node.classList.contains("inactive"));
+              goalDates.forEach(date => {
+                const day = date.startDate.substring(8, 10);
+                const dateElement = activeLiElements.find(element => element.innerText === day);
+                dateElement.classList.add("goal-set");
+              });
+            })
+            .catch(error => {
+              console.log("Error:", error);
+            });
+        }
+getGoalDates();
+
 </script>
 <script src="/static/calendar.js"></script>
 </html>

@@ -253,3 +253,4 @@ addSubTask.addEventListener("click", (e) => {
     subTList.innerHTML = subT;
     document.querySelector(".div-subtask").style.display="none";
 })
+

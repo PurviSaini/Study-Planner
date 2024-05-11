@@ -3,7 +3,6 @@ const goalSchema = new mongoose.Schema({
     userEmail: {
         type: String,
         required: true,
-        unique: true
     },
     goalTitle: {
         type: String,
@@ -12,6 +11,10 @@ const goalSchema = new mongoose.Schema({
     subTasks: {
         type: Object,
         required: true
+    },
+    startDate: {
+        type: Date,
+        required: true,
     },
     dueDate: {
         type: Date,

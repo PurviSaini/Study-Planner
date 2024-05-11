@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const User = require("./models/User");
 const Task= require("./models/Task");
+const Goals= require("./models/Goals");
+
 const port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -138,7 +140,31 @@ app.post("/addTask", async (req, res) => {
     res.status(500).send({ title: "Failed to add task" });
   }
 });
+//add goal
+app.post("/addGoal", async (req, res) => {
+  const { userEmail, goalTitle, subTasks, startDate, dueDate } = req.body;
+  try {
+    const goal = new Goals({ userEmail, goalTitle, subTasks, startDate, dueDate });
+    await goal.save();
+    res.status(200).send({ title: "Goal added successfully", goalId: goal._id });
+  } catch (error) {
+    console.error("Error during adding goal:", error);
+    res.status(500).send({ title: "Failed to add goal" });
+  }
+});
+// Get goals
+app.post("/getGoals", async (req, res) => {
 
+  try {
+    const  userEmail = req.body.userEmail;
+    const startDate = new Date(req.body.clickDate);
+    const goal = await Goals.findOne({ userEmail, startDate });
+    res.status(200).send(goal);
+  } catch (error) {
+    console.error("Error during finding goal:", error);
+    res.status(500).send({ title: "Failed to find goal" });
+  }
+});
 // Delete task
 app.delete("/deleteTask", async (req, res) => {
   const taskId = req.query.taskId;
@@ -163,6 +189,20 @@ app.post("/updateStatus", async (req, res) => {
   } catch (error) {
     console.error("Error during updating task status:", error);
     res.status(500).send({ title: "Failed to update task status" });
+  }
+});
+// Get goal dates
+app.post("/getGoalDates", async (req, res) => {
+  const { userEmail } = req.body;
+  try {
+    const goals = await Goals.find({ userEmail });
+    const goalDates = goals.map((goal) => ({
+      startDate: goal.startDate,
+    }));
+    res.status(200).send(goalDates);
+  } catch (error) {
+    console.error("Error during getting goal dates:", error);
+    res.status(500).send({ title: "Failed to get goal dates" });
   }
 });
 
