@@ -184,14 +184,15 @@ span2.onclick = function() {
   }
 
 //update the status of checkboxes in the backend
-function setStatus(taskId){
+function setStatus(taskId,status){
 fetch('/updateStatus', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        taskId: taskId
+        taskId: taskId,
+        status:status
     })
 })
     .then(response => {
@@ -216,9 +217,10 @@ const countCheckedBoxes = async() => {
         if(checkbox.checked) {
             checkedCount++;
             //set the status of the task in backend
-            let response = await setStatus(checkbox.id.slice(0, -1));
+            let response = await setStatus(checkbox.id.slice(0, -1),"checked");
         }
         else{
+            let response = await setStatus(checkbox.id.slice(0, -1),"");
             upcomingTaskTitles.push(document.querySelector(`label[for="${checkbox.id}"]`).innerText);
         }
         localStorage.setItem("upcomingTaskTitles", JSON.stringify(upcomingTaskTitles));

@@ -153,9 +153,9 @@ app.delete("/deleteTask", async (req, res) => {
 
 // Update task status
 app.post("/updateStatus", async (req, res) => {
-  const { taskId } = req.body;
+  const { taskId,status } = req.body;
   try {
-    const updatedTask = await Task.findByIdAndUpdate(taskId, { status: "checked" });
+    const updatedTask = await Task.findByIdAndUpdate(taskId, { status: status });
     if (!updatedTask) {
       return res.status(404).send({ title: "Task not found" });
     }
