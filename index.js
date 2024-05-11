@@ -138,7 +138,7 @@ app.post("/addTask", async (req, res) => {
     res.status(500).send({ title: "Failed to add task" });
   }
 });
-//delete task
+
 // Delete task
 app.delete("/deleteTask", async (req, res) => {
   const taskId = req.query.taskId;
@@ -150,6 +150,7 @@ app.delete("/deleteTask", async (req, res) => {
     res.status(500).send({ title: "Failed to delete task" });
   }
 });
+
 // Update task status
 app.post("/updateStatus", async (req, res) => {
   const { taskId } = req.body;

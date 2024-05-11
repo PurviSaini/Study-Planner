@@ -62,7 +62,7 @@
 
 .progress-bar .progress-value {
   color: indigo;
-  margin-top: 40px;
+  margin-top: 37%;
 }
 
 * {
@@ -74,3 +74,9 @@
     border-top: 1px pink solid;
     border-bottom: 1px pink solid;
   }
+
+.font2 {
+  font-family: sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
