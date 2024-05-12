@@ -72,13 +72,7 @@ app.get("/signup", (req, res) => {
   res.sendFile(__dirname+"/pages/signup.html");
 });
 app.get("/logout", async (req, res) => {
-  try {
-    await req.session.destroy();
-    res.redirectto("/");
-  } catch (error) {
-    console.error("Error:", error);
-    res.json({ success: false });
-  }
+  res.redirect("/");
 });
 // endpoints for APIs
 // User signup endpoint
