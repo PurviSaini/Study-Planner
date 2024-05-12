@@ -26,6 +26,7 @@ app.use(
 );
 // Middleware to check if the user is authenticated
 function checkAuth(req, res, next) {
+  console.log(req.session,req.session.user);
   if (req.session && req.session.user) {
     next();
   } else {
@@ -59,18 +60,18 @@ app.get("/", async (req, res) => {
 });
 
 // Home route with session check and basic error handling
-  app.get("/home", checkAuth, (req, res) => {
+  app.get("/home", (req, res) => {
     res.sendFile(__dirname + "/pages/index.html");
   });
 
-app.get("/calendar",checkAuth, (req, res) => {
+app.get("/calendar", (req, res) => {
   res.sendFile(__dirname+"/pages/calendar.html");
 });
 
 app.get("/signup", (req, res) => {
   res.sendFile(__dirname+"/pages/signup.html");
 });
-app.get("/logout", checkAuth, async (req, res) => {
+app.get("/logout", async (req, res) => {
   try {
     await req.session.destroy();
     res.json({ success: true });
