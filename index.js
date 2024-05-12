@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
+const crypto = require("crypto");
 const app = express();
 require("dotenv").config();
 const bodyParser = require("body-parser");
@@ -13,12 +14,14 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/public", express.static(__dirname + "/public"));
+// Generate a random session secret
+const sessionSecret = crypto.randomBytes(32).toString("hex");
+// The session middleware
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, // Use environment variable for secret key
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === "production" }, // Set secure flag in production
   })
 );
 // Middleware to check if the user is authenticated
