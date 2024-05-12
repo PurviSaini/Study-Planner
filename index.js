@@ -74,7 +74,7 @@ app.get("/signup", (req, res) => {
 app.get("/logout", async (req, res) => {
   try {
     await req.session.destroy();
-    res.json({ success: true });
+    res.redirectto("/");
   } catch (error) {
     console.error("Error:", error);
     res.json({ success: false });
