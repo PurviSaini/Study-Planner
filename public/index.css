@@ -7,9 +7,11 @@
   );
 }
 .outer{
+  background-image: url("https://media-public.canva.com/Up4BI/MAFPkEUp4BI/1/tl.jpg");
     height: 100vh;
 }
 .content{
+  backdrop-filter: blur(1px);
     width: 100vw;
 }
 

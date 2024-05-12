@@ -126,7 +126,6 @@ const span = document.getElementsByClassName("close")[0];
 // Add click event listeners to the button
 const btn = document.querySelector("#add-task");
 btn.addEventListener("click", () => {
-    console.log("Add Task");
     modal1.style.display = "block";
 });
 
@@ -181,35 +180,6 @@ day.addEventListener("click", (event) => {
     }
   });
 
-// Add click event listeners to all the calendar dates
-// const dates = document.querySelectorAll(".calendar-dates li");
-// const addGoal = (e) => {
-//     const clickedDate = e.target.innerText;
-//     const clickedMonth = document.querySelector(".month").innerText;
-//     let clickedMonthno = 0;
-//     for(let i=0;i<12;i=i+1)
-//     {
-//         if(clickedMonth == months[i])
-//         {
-//             clickedMonthno = i;
-//             break;
-//         }
-//     }
-//     const clickedYear = document.querySelector(".year").innerText;
-//     const clickedDateSet = new Date(clickedYear, clickedMonthno, clickedDate);
-//     const currentDate = new Date();
-//     if(clickedDateSet > currentDate)
-//     {
-//         modal2.style.display = "block";
-//     }
-//     else
-//     {
-//         alert(`Click on an upcoming date!`);
-//     }
-// }
-// dates.forEach(aDate => {
-//     aDate.addEventListener("click", addGoal);
-// });
 
 // Close the modal when the user clicks on the close (x) button
 span2.onclick = function() {
