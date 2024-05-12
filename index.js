@@ -12,7 +12,7 @@ const Goals= require("./models/Goals");
 const port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/static", express.static("public"));
+app.use("/public", express.static(__dirname + "/public"));
 app.use(
   session({
     secret: process.env.SESSION_SECRET, // Use environment variable for secret key
