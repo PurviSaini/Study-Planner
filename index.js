@@ -58,9 +58,9 @@ app.get("/home", (req, res) => {
 
 
 app.get("/calendar", (req, res) => {
-  if (!req.session.isLoggedIn) {
-    return res.redirect("/");
-  }
+  // if (!req.session.isLoggedIn) {
+  //   return res.redirect("/");
+  // }
   res.sendFile(__dirname+"/pages/calendar.html");
 });
 
