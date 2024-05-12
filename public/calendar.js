@@ -264,3 +264,190 @@ addSubTask.addEventListener("click", (e) => {
     document.querySelector(".div-subtask").style.display="none";
 })
 
+  // Function to display task
+  let checkboxes;
+  function getTasks(){
+    let userEmail=localStorage.getItem("email");
+    fetch(`/getTasks?email=${userEmail}`)
+    .then(response => response.json())
+    .then(data => {
+      let tasksList=document.querySelector(".tasks-list");
+      data.forEach(task=>{
+        tasksList.innerHTML+= `
+             <section id=${task._id}>
+              <input type="checkbox" id=${task._id+"T"} ${task.status}>
+                <label for=${task._id+"T"} class="blue">${task.taskTitle}</label><span class="ms-4" id="delete" onclick="deleteTask('${task._id}')">🚫</span><br>
+              <ul>
+                <li>${task.taskDesc}</li>
+              </ul>
+              </section>`        
+      })
+      checkboxes=document.querySelectorAll('input[type="checkbox"]');
+      countCheckedBoxes();
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("click", countCheckedBoxes);
+      });
+    })
+  }
+  getTasks();
+
+  async function postData(url = "", data = {}) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  }
+
+  let userEmail=localStorage.getItem("email");
+  document.getElementById("email").innerText=userEmail;
+  document.getElementById("logout").addEventListener("click",()=>{
+    localStorage.removeItem("email");
+    window.location.href="/";  
+  })
+
+  // add new task
+  let submitTaskBtn=document.getElementById("task-submit");
+  submitTaskBtn.addEventListener('click',async (e)=>{
+    e.preventDefault();
+    let taskHeading=document.getElementById("input-task").value;
+    let taskDescription=document.getElementById("text-description").value;
+    let startDate = new Date();
+    let dueDate = new Date();
+    dueDate.setDate(startDate.getDate() + 1);
+
+    let taskObj={
+      userEmail:userEmail,
+      taskTitle:taskHeading,
+      taskDesc:taskDescription,
+      startDate:startDate,
+      dueDate:dueDate,
+    };
+    //need to make a post request for adding task
+    let response= await postData("/addTask",taskObj);
+    if(response.title=="Task added successfully"){
+      const taskId=response.taskId;
+      document.querySelector(".tasks-list").innerHTML+= `
+              <section id=${taskId}>
+              <input type="checkbox" id=${taskId+"T"}>
+                <label for=${taskId+"T"} class="blue">${taskHeading}</label><span class="ms-4" id="delete" onclick="deleteTask('${taskId}')">🚫</span><br>
+              <ul>
+                <li>${taskDescription}</li>
+              </ul>
+              </section>`;
+      checkboxes=document.querySelectorAll('input[type="checkbox"]');
+      countCheckedBoxes();
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("click", countCheckedBoxes);
+      });
+    }
+    else{
+      alert("Task not added");
+    }
+  })
+
+  // Delete task
+  async function deleteTask(taskId) {
+    const response = await fetch(`/deleteTask?taskId=${taskId}`, {
+      method: 'DELETE',
+    });
+    const data = await response.json();
+    // Handle the response from the backend
+    if (data.title=="Task deleted successfully") {
+      document.getElementById(taskId).remove();
+      checkboxes=document.querySelectorAll('input[type="checkbox"]');
+      countCheckedBoxes();
+    } else {
+      alert('Failed to delete task');
+    }
+  }
+  let clickDate;
+  let clickDateEle;
+    // Function to handle click event on calendar dates
+    let calendarDates = document.querySelector(".calendar-dates");
+    calendarDates.addEventListener("click", async function(event) {
+      // Handle the click event here
+    clickDateEle=event.target;
+    const month = months.indexOf(document.querySelector(".month").innerText); // Example month value
+    const year =  parseInt(document.querySelector(".year").innerText); // Example year value
+    const day = parseInt(event.target.innerText); // Example day number value
+    // Create a new Date object using the given month, year, and day
+     clickDate = new Date(year, month, day+1);
+    // Use the date object as needed
+    if(clickDateEle.classList.contains("goal-set")){
+      const userEmail = localStorage.getItem("email");
+      await postData("/getGoals", { userEmail, clickDate })
+            .then(response => {
+
+              const goals = response;
+              const goalsList = document.querySelector(".goals");
+              goalsList.innerHTML = "";
+                goalsList.innerHTML += `<h5>📍${goals.goalTitle}</h5><span> Due Date: ${goals.dueDate.substring(0, 10)}</span>`;
+                goals.subTasks.forEach(subTask => {
+                  goalsList.innerHTML += `<li>${subTask}</li>`;
+              });
+            })
+            .catch(error => {
+              console.log("Error:", error);
+            });
+
+    }
+    });
+  // submit weekly goals
+let goalSubmitBtn=document.querySelector("#goal-submit");
+goalSubmitBtn.addEventListener("click", async(e) => {
+    e.preventDefault();
+    const userEmail = localStorage.getItem("email");
+    let goalTitle = document.querySelector("#input-goal").value;
+    let goalSubtasks = document.querySelectorAll(".subtasks li");
+    let startDate = clickDate;
+    let dueDate =new Date();
+    dueDate.setDate(startDate.getDate() + 7);
+
+    let subTaskList = [];
+    for(let i=0;i<goalSubtasks.length;i++)
+    {
+        subTaskList.push(goalSubtasks[i].innerText);
+    }
+    let goalObj={
+      userEmail:userEmail,
+      goalTitle:goalTitle,
+      subTasks:subTaskList,
+      startDate:startDate,
+      dueDate:dueDate,
+    };
+    let response = await postData("/addGoal", goalObj);
+    if (response.title=="Goal added successfully") {
+      alert("Goal added successfully");
+      document.querySelector(".goals").innerHTML = `<h5>📍${goalTitle}</h5>`;
+      subTaskList.forEach(subTask => {
+        document.querySelector(".goals").innerHTML += `<li>${subTask}</li>`;
+      });
+      clickDateEle.classList.add("goal-set");
+    } else {
+        console.log('Failed to add goal');
+    }
+})
+
+// Function to get goal dates and add class goal-set
+async function getGoalDates() {
+const userEmail = localStorage.getItem("email");
+await postData("/getGoalDates", { userEmail })
+  .then(response => {
+  const goalDates = response;
+  const calendarDates = document.querySelector(".calendar-dates");
+  const activeLiElements = Array.from(calendarDates.childNodes).filter(node => !node.classList.contains("inactive"));
+  goalDates.forEach(date => {
+    const day = date.startDate.substring(8, 10);
+    const dateElement = activeLiElements.find(element => element.innerText === day);
+    dateElement.classList.add("goal-set");
+  });
+  })
+    .catch(error => {
+      console.log("Error:", error);
+    });
+}
+getGoalDates();
