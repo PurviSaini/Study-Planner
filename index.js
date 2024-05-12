@@ -21,6 +21,14 @@ app.use(
     cookie: { secure: process.env.NODE_ENV === "production" }, // Set secure flag in production
   })
 );
+// Middleware to check if the user is authenticated
+function checkAuth(req, res, next) {
+  if (req.session && req.session.user) {
+    next();
+  } else {
+    res.json({ loggedIn: false });
+  }
+}
 // Connect to MongoDB
 const uri = process.env.URI;
 const clientOptions = {
@@ -43,31 +51,31 @@ async function run() {
 run().catch(console.dir);
 
 //endpoints for serving the files
-app.get("/", (req, res) => {
-  // req.session.isLoggedIn = false;
+app.get("/", async (req, res) => {
   res.sendFile(__dirname +"/pages/login.html");
 });
 
 // Home route with session check and basic error handling
-app.get("/home", (req, res) => {
-  // if (!req.session.isLoggedIn) {
-  //   return res.redirect("/");
-  // }
-  res.sendFile(__dirname+"/pages/index.html");
-});
+  app.get("/home", checkAuth, (req, res) => {
+    res.sendFile(__dirname + "/pages/index.html");
+  });
 
-
-app.get("/calendar", (req, res) => {
-  // if (!req.session.isLoggedIn) {
-  //   return res.redirect("/");
-  // }
+app.get("/calendar",checkAuth, (req, res) => {
   res.sendFile(__dirname+"/pages/calendar.html");
 });
 
 app.get("/signup", (req, res) => {
   res.sendFile(__dirname+"/pages/signup.html");
 });
-
+app.get("/logout", checkAuth, async (req, res) => {
+  try {
+    await req.session.destroy();
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error:", error);
+    res.json({ success: false });
+  }
+});
 // endpoints for APIs
 // User signup endpoint
 app.post("/signup", async (req, res) => {
@@ -109,7 +117,7 @@ app.post("/login", async (req, res) => {
     }
 
     // Login successful, set session variable
-    req.session.isLoggedIn = true;
+    req.session.user = user;
     res.send({ title: "Login successful" });
   } catch (error) {
     console.error("Error during login:", error);

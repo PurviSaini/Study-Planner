@@ -30,7 +30,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li><a class="dropdown-item" href="#" id="email">user email</a></li>
-            <li><a class="dropdown-item" href="#" id="logout">LogOut</a></li>
+            <li><a class="dropdown-item" href="/logout" id="logout">LogOut</a></li>
           </ul>
         </div>
       </li>
@@ -130,7 +130,6 @@
   document.getElementById("email").innerText=userEmail;
   document.getElementById("logout").addEventListener("click",()=>{
     localStorage.removeItem("email");
-    window.location.href="/";
   })
 
   //set username
