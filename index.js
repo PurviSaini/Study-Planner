@@ -44,15 +44,15 @@ run().catch(console.dir);
 
 //endpoints for serving the files
 app.get("/", (req, res) => {
-  req.session.isLoggedIn = false;
+  // req.session.isLoggedIn = false;
   res.sendFile(__dirname +"/pages/login.html");
 });
 
 // Home route with session check and basic error handling
 app.get("/home", (req, res) => {
-  if (!req.session.isLoggedIn) {
-    return res.redirect("/");
-  }
+  // if (!req.session.isLoggedIn) {
+  //   return res.redirect("/");
+  // }
   res.sendFile(__dirname+"pages/index.html");
 });
 
