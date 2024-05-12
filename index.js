@@ -53,7 +53,7 @@ app.get("/home", (req, res) => {
   if (!req.session.isLoggedIn) {
     return res.redirect("/");
   }
-  res.sendFile("pages/index.html", { root: __dirname });
+  res.sendFile(__dirname+"pages/index.html");
 });
 
 
@@ -61,11 +61,11 @@ app.get("/calendar", (req, res) => {
   if (!req.session.isLoggedIn) {
     return res.redirect("/");
   }
-  res.sendFile("pages/calendar.html", { root: __dirname });
+  res.sendFile(__dirname+"pages/calendar.html");
 });
 
 app.get("/signup", (req, res) => {
-  res.sendFile("pages/signup.html", { root: __dirname });
+  res.sendFile(__dirname+"pages/signup.html");
 });
 
 // endpoints for APIs
