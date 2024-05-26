@@ -60,11 +60,11 @@ app.get("/", async (req, res) => {
 });
 
 // Home route with session check and basic error handling
-  app.get("/home", checkAuth, (req, res) => {
+  app.get("/home", (req, res) => {
     res.sendFile(__dirname + "/pages/index.html");
   });
 
-app.get("/calendar", checkAuth, (req, res) => {
+app.get("/calendar", (req, res) => {
   res.sendFile(__dirname+"/pages/calendar.html");
 });
 
