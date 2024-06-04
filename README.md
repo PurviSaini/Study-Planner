@@ -1,61 +1,31 @@
 # Study Planner Setup Guide
+#### _Plan Smart, Study Hard: Your Interactive Path To Success_
+
+# Live Demo: <a href="https://study-planner-lyart.vercel.app/">StudyPlanner</a>
 
 ## Project Overview
-The Study Planner project provides a user-friendly application to organize and manage your learning schedule. It utilizes MongoDB to store user data and Express.js for server-side functionality.
+Introducing our Interactive Study Planner, your ultimate tool for academic success. This innovative planner allows you to effortlessly add and track daily tasks, ensuring you stay organized and productive. Set and monitor weekly goals directly from the calendar, keeping your objectives clear and attainable. With our study planner, you can streamline your study routine, maintain focus, and achieve your academic ambitions with ease.
 
-### Prerequisites
-- Node.js and npm (or yarn) installed on your system.
-- A MongoDB Atlas account (free tier available).
+## Key Features
 
-### Setup
+- It provides a Login/Logout facility.
+- It provides a signup facility, to become a user.
+- Users can add/delete daily tasks through the calendar.
+- Users can set weekly goals with subtasks to be completed.
+- Users can view his/her task completion progress.
 
-#### Create a MongoDB Cluster
-1. Sign up for a free MongoDB Atlas account at [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database).
-2. Create a new cluster.
-3. Choose a cloud provider region for optimal performance.
-4. Select a free cluster tier (e.g., M0 Sandbox).
-5. Once the cluster is running, click on "Connect" to access connection details.
+## Screenshots
+### LOGIN
+![image](https://github.com/PurviSaini/Study-Planner/assets/101940722/e06067d7-6524-4e76-a3e8-7189cf377e8b)
 
-#### Create Database and Collection
-1. In the "Collections" tab, create a new database named "study-planner".
-2. Within the "study-planner" database, create a collection named "User".
+### SIGNUP
+![image](https://github.com/PurviSaini/Study-Planner/assets/101940722/d6f973a4-dff6-483b-9abd-d5e274874fbe)
+### HOME PAGE
+![image](https://github.com/PurviSaini/Study-Planner/assets/101940722/43721738-7cbe-43c5-8825-b3c88c413c8c)
 
-#### Connect to MongoDB
-1. In the "Connect" tab, select the appropriate driver version (e.g., Node.js driver version 3.x or later) and connection method (e.g., URI connection string).
-2. The URI string will look something like:
-   ```
-   mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/<database-name>?retryWrites=true&w=majority
-   ```
-3. Replace placeholders with your actual values (username, password, cluster-name, database-name).
+### CALENDAR PAGE
+![image](https://github.com/PurviSaini/Study-Planner/assets/101940722/48ae4406-e19f-494e-ade0-2fa33d3b7b6b)
 
-#### Create .env File
-1. Create a file named `.env` in the same directory as your project's root directory.
-2. Paste the following lines into the `.env` file, replacing `<URI>` with your actual MongoDB connection URI string:
-   ```
-   URI=<URI>
-   SESSION_SECRET=your_secret_string
-   ```
-3. Important: Never commit the `.env` file to version control systems (e.g., Git) as it contains sensitive information.
 
-#### Install Dependencies
-1. Open your terminal/command prompt and navigate to the project directory.
-2. Run the following command to install required dependencies:
-   ```bash
-   npm install
-   ```
-   Alternatively, if you prefer using yarn, run:
-   ```bash
-   yarn install
-   ```
 
-#### Start the Project
-1. Run the following command to start the server:
-   ```bash
-   npm start
-   ```
-   Alternatively, using yarn:
-   ```bash
-   yarn start
-   ```
-2. This will typically start the server on port 3000 (default). You can access the application by visiting [http://localhost:3000](http://localhost:3000) in your web browser (the exact port may vary depending on your configuration).
 
